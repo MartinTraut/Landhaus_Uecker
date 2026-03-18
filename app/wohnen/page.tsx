@@ -20,12 +20,12 @@ function ApartmentCard({ apartment, index }: { apartment: (typeof APARTMENTS)[0]
       <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-warm-100 hover:shadow-xl transition-shadow duration-300">
         {/* Image */}
         <Link href={`/wohnen/${apartment.slug}`} className="block relative aspect-[4/3] overflow-hidden">
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={apartment.images[0]}
             alt={apartment.name}
-            fill
-            unoptimized
-            className="object-cover hover:scale-105 transition-transform duration-500"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+            loading="lazy"
           />
           <div className="absolute top-4 right-4 bg-forest-700 text-white font-serif text-lg px-4 py-1.5 rounded-full shadow-md">
             ab {apartment.priceFollowing} / Nacht
@@ -83,12 +83,14 @@ function ApartmentCard({ apartment, index }: { apartment: (typeof APARTMENTS)[0]
             >
               Details ansehen
             </Link>
-            <Link
-              href="/kontakt"
+            <a
+              href="https://www.xn--landhaus-cker-4ob.de/77/anfrage"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex-1 text-center font-serif text-lg font-semibold text-white bg-forest-700 rounded-xl py-3 px-6 hover:bg-forest-800 transition-colors shadow-md"
             >
-              Anfragen
-            </Link>
+              Jetzt buchen
+            </a>
           </div>
         </div>
       </div>

@@ -362,11 +362,13 @@ function ApartmentCard({ apt, index }: { apt: Apartment; index: number }) {
 
           {/* Buchungs-CTA */}
           <a
-            href="#kontakt"
+            href="https://www.xn--landhaus-cker-4ob.de/77/anfrage"
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-forest-700 px-6 py-3.5 font-serif text-[15px] font-semibold text-white shadow-sm transition-all duration-300 hover:bg-forest-800 hover:shadow-md"
           >
             <Send className="h-4 w-4" />
-            {apt.name} anfragen
+            Jetzt buchen
           </a>
         </div>
       </div>

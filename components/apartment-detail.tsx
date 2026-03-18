@@ -14,8 +14,8 @@ function ImageCarousel({ images, name }: { images: string[]; name: string }) {
 
   return (
     <div className="w-full">
-      {/* Main Image */}
-      <div className="relative aspect-[16/9] md:aspect-[2/1] rounded-2xl overflow-hidden bg-warm-100">
+      {/* Main Image - sauber ohne Balken */}
+      <div className="relative aspect-[4/3] sm:aspect-[3/2] lg:aspect-[16/9] rounded-2xl overflow-hidden bg-warm-900">
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
@@ -25,13 +25,12 @@ function ImageCarousel({ images, name }: { images: string[]; name: string }) {
             transition={{ duration: 0.3 }}
             className="absolute inset-0"
           >
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={images[current]}
               alt={`${name} - Bild ${current + 1}`}
-              fill
-              unoptimized
-              className="object-cover"
-              priority={current === 0}
+              className="h-full w-full object-cover"
+              loading={current === 0 ? "eager" : "lazy"}
             />
           </motion.div>
         </AnimatePresence>
@@ -39,49 +38,48 @@ function ImageCarousel({ images, name }: { images: string[]; name: string }) {
         {/* Prev / Next Buttons */}
         <button
           onClick={prev}
-          className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-warm-900 rounded-full p-3 shadow-lg transition-colors z-10"
+          className="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-3 text-warm-900 shadow-lg transition-colors hover:bg-white"
           aria-label="Vorheriges Bild"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
         <button
           onClick={next}
-          className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-warm-900 rounded-full p-3 shadow-lg transition-colors z-10"
+          className="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-3 text-warm-900 shadow-lg transition-colors hover:bg-white"
           aria-label="Nächstes Bild"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </button>
 
-        {/* Dot Indicators */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-          {images.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrent(i)}
-              className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                i === current ? "bg-white" : "bg-white/50 hover:bg-white/75"
-              }`}
-              aria-label={`Bild ${i + 1}`}
-            />
-          ))}
+        {/* Bildzähler statt Dots */}
+        <div className="absolute bottom-4 right-4 z-10 rounded-lg bg-black/50 px-3 py-1.5 font-serif text-sm text-white backdrop-blur-sm">
+          {current + 1} / {images.length}
         </div>
       </div>
 
       {/* Thumbnail Strip */}
-      <div className="mt-3 flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
+      <div className="mt-3 flex gap-2 overflow-x-auto pb-2">
         {images.map((src, i) => (
           <button
             key={i}
             onClick={() => setCurrent(i)}
-            className={`relative flex-shrink-0 w-20 h-14 md:w-24 md:h-16 rounded-lg overflow-hidden transition-all ${
-              i === current ? "ring-3 ring-forest-600 opacity-100" : "opacity-60 hover:opacity-90"
+            className={`relative h-16 w-24 shrink-0 overflow-hidden rounded-lg transition-all md:h-20 md:w-28 ${
+              i === current
+                ? "ring-3 ring-forest-600 ring-offset-2"
+                : "opacity-50 hover:opacity-80"
             }`}
           >
-            <Image src={src} alt={`Thumbnail ${i + 1}`} fill unoptimized className="object-cover" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={src}
+              alt={`Thumbnail ${i + 1}`}
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
           </button>
         ))}
       </div>
@@ -301,13 +299,21 @@ export default function ApartmentDetail({ slug }: { slug: string }) {
             {apartment.priceNote}
           </p>
 
-          {/* CTA Button */}
-          <div className="mt-8 text-center">
+          {/* CTA Buttons */}
+          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+            <a
+              href="https://www.xn--landhaus-cker-4ob.de/77/anfrage"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-forest-700 px-10 py-4 font-serif text-xl font-bold text-white shadow-lg transition-all hover:bg-forest-800 hover:shadow-xl sm:w-auto"
+            >
+              Jetzt buchen
+            </a>
             <Link
               href="/kontakt"
-              className="inline-block font-serif text-xl font-bold text-white bg-forest-700 hover:bg-forest-800 rounded-xl py-4 px-10 shadow-lg transition-colors"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl border-2 border-forest-700 px-10 py-4 font-serif text-xl font-bold text-forest-700 transition-all hover:bg-forest-50 sm:w-auto"
             >
-              Jetzt anfragen
+              Anfrage senden
             </Link>
           </div>
         </motion.div>

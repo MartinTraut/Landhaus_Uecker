@@ -1,5 +1,6 @@
 import Image from "next/image"
-import { MapPin, Phone, Mail } from "lucide-react"
+import Link from "next/link"
+import { MapPin, Phone, Mail, CloudSun } from "lucide-react"
 
 export function Footer() {
   return (
@@ -8,18 +9,30 @@ export function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Logo + Beschreibung */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <Image
-              src="https://www.xn--landhaus-cker-4ob.de/images/3187/logo-walter2.png"
-              alt="Landhaus Ücker Logo"
-              width={200}
-              height={200}
-              className="logo-sharp h-16 w-auto"
-              unoptimized
-            />
+            <Link href="/">
+              <Image
+                src="https://www.xn--landhaus-cker-4ob.de/images/3187/logo-walter2.png"
+                alt="Landhaus Ücker Logo"
+                width={200}
+                height={200}
+                className="logo-sharp h-16 w-auto"
+                unoptimized
+              />
+            </Link>
             <p className="mt-4 font-serif text-[14px] leading-relaxed text-white/50">
               Gemütliche Ferienwohnungen mit Panoramablick in die Allgäuer
               Alpen. Ihr Zuhause auf 900 Metern Höhe.
             </p>
+            {/* Wetter-Link */}
+            <a
+              href="https://14-tage-wettervorhersage.de/wetter/obermaiselstein/vorhersage/177202/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-white/8 px-3 py-2 font-serif text-[13px] text-white/60 transition-colors hover:bg-white/15 hover:text-white"
+            >
+              <CloudSun className="h-4 w-4" />
+              Wettervorhersage Obermaiselstein
+            </a>
           </div>
 
           {/* Navigation */}
@@ -29,21 +42,21 @@ export function Footer() {
             </h3>
             <ul className="mt-4 space-y-2">
               {[
-                { label: "Willkommen", href: "#hero" },
-                { label: "Über uns", href: "#ueber-uns" },
-                { label: "Wohnungen", href: "#wohnungen" },
-                { label: "Ausflüge", href: "#ausfluege" },
-                { label: "Galerie", href: "#galerie" },
-                { label: "Webcam", href: "#webcam" },
-                { label: "Kontakt", href: "#kontakt" },
+                { label: "Startseite", href: "/" },
+                { label: "Wohnungen", href: "/wohnen" },
+                { label: "Informationen", href: "/informationen" },
+                { label: "Aktivitäten", href: "/informationen/aktivitaeten" },
+                { label: "Galerie", href: "/galerie" },
+                { label: "Webcam", href: "/webcam" },
+                { label: "Kontakt", href: "/kontakt" },
               ].map((link) => (
                 <li key={link.href}>
-                  <a
+                  <Link
                     href={link.href}
-                    className="font-serif text-[13px] text-white/50 transition-colors hover:text-white"
+                    className="font-serif text-[14px] text-white/50 transition-colors hover:text-white"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -52,22 +65,22 @@ export function Footer() {
           {/* Wohnungen */}
           <div>
             <h3 className="font-serif text-[15px] font-semibold text-white">
-              Wohnungen
+              Ferienwohnungen
             </h3>
             <ul className="mt-4 space-y-2">
               {[
-                "Fewo Rose (54 m²)",
-                "Fewo Veilchen (54 m²)",
-                "Fewo Flieder (80 m²)",
-                "Fewo Löwenzahn (20 m²)",
-              ].map((name) => (
-                <li key={name}>
-                  <a
-                    href="#wohnungen"
-                    className="font-serif text-[13px] text-white/50 transition-colors hover:text-white"
+                { name: "Fewo Rose (54 m²)", href: "/wohnen/rose" },
+                { name: "Fewo Veilchen (54 m²)", href: "/wohnen/veilchen" },
+                { name: "Fewo Flieder (80 m²)", href: "/wohnen/flieder" },
+                { name: "Fewo Löwenzahn (20 m²)", href: "/wohnen/loewenzahn" },
+              ].map((apt) => (
+                <li key={apt.href}>
+                  <Link
+                    href={apt.href}
+                    className="font-serif text-[14px] text-white/50 transition-colors hover:text-white"
                   >
-                    {name}
-                  </a>
+                    {apt.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -79,7 +92,7 @@ export function Footer() {
               Kontakt
             </h3>
             <ul className="mt-4 space-y-3">
-              <li className="flex items-start gap-2.5 font-serif text-[13px]">
+              <li className="flex items-start gap-2.5 font-serif text-[14px]">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-white/30" />
                 <span>
                   Oberdorf 18
@@ -90,7 +103,7 @@ export function Footer() {
               <li>
                 <a
                   href="tel:+4983267711"
-                  className="flex items-center gap-2.5 font-serif text-[13px] transition-colors hover:text-white"
+                  className="flex items-center gap-2.5 font-serif text-[14px] transition-colors hover:text-white"
                 >
                   <Phone className="h-4 w-4 text-white/30" />
                   08326 / 7711
@@ -99,7 +112,7 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:landhaus-uecker@gmx.de"
-                  className="flex items-center gap-2.5 font-serif text-[13px] transition-colors hover:text-white"
+                  className="flex items-center gap-2.5 font-serif text-[14px] transition-colors hover:text-white break-all"
                 >
                   <Mail className="h-4 w-4 text-white/30" />
                   landhaus-uecker@gmx.de

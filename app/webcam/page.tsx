@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { WEBCAM_URL } from "@/lib/data";
-import { Camera, ExternalLink } from "lucide-react";
+import { Camera, ExternalLink, CloudSun } from "lucide-react";
 
 export default function WebcamPage() {
   const headerRef = useRef<HTMLDivElement>(null);
@@ -66,15 +66,26 @@ export default function WebcamPage() {
             <p className="font-serif text-base text-forest-100">
               Quelle: foto-webcam.eu
             </p>
-            <a
-              href={WEBCAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-6 py-3 font-serif text-lg font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
-            >
-              <ExternalLink className="h-5 w-5" />
-              Im neuen Tab öffnen
-            </a>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <a
+                href="https://14-tage-wettervorhersage.de/wetter/obermaiselstein/vorhersage/177202/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-6 py-3 font-serif text-lg font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+              >
+                <CloudSun className="h-5 w-5" />
+                14-Tage Wettervorhersage
+              </a>
+              <a
+                href={WEBCAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-6 py-3 font-serif text-lg font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+              >
+                <ExternalLink className="h-5 w-5" />
+                Webcam im neuen Tab
+              </a>
+            </div>
           </div>
         </div>
       </motion.div>
