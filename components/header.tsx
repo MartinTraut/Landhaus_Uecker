@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Menu, X, Phone, ChevronDown } from "lucide-react"
@@ -120,19 +119,22 @@ export function Header() {
           <div className="flex items-center justify-between py-3 lg:py-2">
             {/* Logo links */}
             <Link href="/" className="shrink-0">
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src="https://www.xn--landhaus-cker-4ob.de/images/3187/logo-walter2.png"
                 alt="Landhaus Ücker"
                 width={200}
                 height={200}
-                className="logo-sharp h-14 w-auto sm:h-16 transition-[filter] duration-500"
-                style={
-                  isScrolled || !isHome
+                className="h-14 w-auto sm:h-16 transition-[filter] duration-500"
+                style={{
+                  imageRendering: "auto",
+                  WebkitFontSmoothing: "antialiased",
+                  ...(isScrolled || !isHome
                     ? { filter: "brightness(0) saturate(100%) invert(18%) sepia(25%) saturate(2000%) hue-rotate(95deg) brightness(95%)" }
-                    : undefined
-                }
-                priority
-                unoptimized
+                    : {}),
+                }}
+                fetchPriority="high"
+                decoding="async"
               />
             </Link>
 

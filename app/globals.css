@@ -153,7 +153,10 @@
 /* Scharfe Logo-Darstellung */
 .logo-sharp {
   image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
+  image-rendering: high-quality;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 /* Auswahl-Farbe */
