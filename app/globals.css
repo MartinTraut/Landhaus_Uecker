@@ -1,0 +1,158 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(0.985 0.003 85);
+  --foreground: oklch(0.15 0.02 50);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.15 0.02 50);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0.02 50);
+  --primary: oklch(0.33 0.09 145);
+  --primary-foreground: oklch(0.98 0.005 90);
+  --secondary: oklch(0.93 0.02 85);
+  --secondary-foreground: oklch(0.20 0.03 50);
+  --muted: oklch(0.95 0.01 85);
+  --muted-foreground: oklch(0.40 0.02 50);
+  --accent: oklch(0.88 0.04 80);
+  --accent-foreground: oklch(0.18 0.03 50);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.88 0.015 85);
+  --input: oklch(0.88 0.015 85);
+  --ring: oklch(0.33 0.09 145);
+  --radius: 0.5rem;
+
+  /* Wärmere, dunklere Farben für besseren Kontrast */
+  --color-warm-50: oklch(0.98 0.008 80);
+  --color-warm-100: oklch(0.96 0.015 80);
+  --color-warm-200: oklch(0.91 0.025 80);
+  --color-warm-300: oklch(0.85 0.03 75);
+  --color-warm-700: oklch(0.35 0.04 50);
+  --color-warm-800: oklch(0.25 0.035 50);
+  --color-warm-900: oklch(0.16 0.025 50);
+
+  --color-forest-50: oklch(0.97 0.015 148);
+  --color-forest-100: oklch(0.93 0.035 148);
+  --color-forest-200: oklch(0.88 0.05 148);
+  --color-forest-600: oklch(0.40 0.09 148);
+  --color-forest-700: oklch(0.33 0.085 148);
+  --color-forest-800: oklch(0.27 0.075 148);
+  --color-forest-900: oklch(0.20 0.06 148);
+}
+
+@theme inline {
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Cormorant Garamond", "Georgia", "Cambria", "Times New Roman", Times, serif;
+  --font-script: "Great Vibes", cursive;
+  --font-body: "Cormorant Garamond", "Georgia", serif;
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+
+  --color-warm-50: var(--color-warm-50);
+  --color-warm-100: var(--color-warm-100);
+  --color-warm-200: var(--color-warm-200);
+  --color-warm-300: var(--color-warm-300);
+  --color-warm-700: var(--color-warm-700);
+  --color-warm-800: var(--color-warm-800);
+  --color-warm-900: var(--color-warm-900);
+  --color-forest-50: var(--color-forest-50);
+  --color-forest-100: var(--color-forest-100);
+  --color-forest-200: var(--color-forest-200);
+  --color-forest-600: var(--color-forest-600);
+  --color-forest-700: var(--color-forest-700);
+  --color-forest-800: var(--color-forest-800);
+  --color-forest-900: var(--color-forest-900);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.7;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  html {
+    @apply scroll-smooth;
+  }
+
+  /* Überschriften: Cormorant Garamond – elegant, warm, gut lesbar */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    line-height: 1.2;
+    font-weight: 600;
+  }
+
+  h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+  h2 { font-size: clamp(1.75rem, 4vw, 2.75rem); }
+  h3 { font-size: clamp(1.35rem, 3vw, 1.85rem); }
+
+  /* Fließtext: Cormorant Garamond – elegant aber leserlich */
+  p {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    line-height: 1.8;
+  }
+
+  /* Schreibschrift-Akzent: Logo-Stil für besondere Wörter */
+  .accent-script {
+    font-family: var(--font-script);
+    font-weight: 400;
+  }
+
+  a {
+    transition: color 0.2s ease;
+  }
+}
+
+/* Scharfe Logo-Darstellung */
+.logo-sharp {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Auswahl-Farbe */
+::selection {
+  background-color: oklch(0.33 0.085 148 / 0.25);
+  color: white;
+}
+
+/* Bessere Lesbarkeit auf kleinen Bildschirmen */
+@media (max-width: 640px) {
+  body {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  p {
+    font-size: 1rem;
+  }
+}
