@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion, useInView } from "framer-motion"
-import { Phone, Mail, MapPin, ArrowRight, Mountain, Home, Maximize, Users } from "lucide-react"
+import { Phone, Mail, MapPin, ArrowRight, Mountain, Home, Maximize, Users, ChevronDown } from "lucide-react"
 
 const heroImages = [
   {
@@ -108,7 +108,7 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero Section ── */}
-      <section className="relative h-[90vh] min-h-[600px] w-full overflow-hidden">
+      <section className="relative h-[100svh] min-h-[500px] w-full overflow-hidden sm:h-[90vh] sm:min-h-[600px]">
         {/* Background images with opacity transition */}
         {heroImages.map((img, index) => (
           <div
@@ -171,30 +171,51 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.9 }}
+            transition={{ duration: 0.8, delay: 1 }}
             className="flex flex-col gap-4 sm:flex-row"
+            style={{ WebkitBackfaceVisibility: "hidden" }}
           >
             <Link
               href="/wohnen"
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-8 py-3.5 font-serif text-lg font-semibold text-forest-800 shadow-lg transition-all hover:bg-warm-100 hover:shadow-xl"
+              className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-white px-6 py-3.5 font-serif text-base font-semibold text-forest-800 shadow-md sm:px-10 sm:py-4 sm:text-lg"
             >
               Unsere Wohnungen
-              <ArrowRight className="h-5 w-5" />
+              <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
-            <Link
-              href="/kontakt"
-              className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/80 px-8 py-3.5 font-serif text-lg font-semibold text-white backdrop-blur-sm transition-all hover:border-white hover:bg-white/15"
+            <a
+              href="https://www.xn--landhaus-cker-4ob.de/77/anfrage"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-forest-700 px-6 py-3.5 font-serif text-base font-semibold text-white shadow-md sm:px-10 sm:py-4 sm:text-lg"
             >
-              Anfrage senden
-            </Link>
+              Jetzt buchen
+            </a>
           </motion.div>
         </div>
 
-{/* Bild-Indikatoren entfernt – Bilder rotieren automatisch */}
       </section>
 
+      {/* Scroll-Pfeil unter dem Hero */}
+      <div className="relative z-10 -mt-8 flex justify-center">
+        <motion.a
+          href="#ueber-uns"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: [0, 6, 0] }}
+          transition={{
+            opacity: { delay: 1.5, duration: 0.6 },
+            y: { repeat: Infinity, duration: 2, ease: "easeInOut" },
+          }}
+          className="flex flex-col items-center gap-1 rounded-full bg-white px-6 py-3 shadow-lg transition-shadow hover:shadow-xl"
+        >
+          <span className="font-serif text-sm font-semibold tracking-wider text-forest-700">
+            Mehr entdecken
+          </span>
+          <ChevronDown className="h-5 w-5 text-forest-700" />
+        </motion.a>
+      </div>
+
       {/* ── Über uns Section ── */}
-      <section className="bg-warm-50 py-20 sm:py-28">
+      <section id="ueber-uns" className="bg-warm-50 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             {/* Image side */}

@@ -125,7 +125,12 @@ export function Header() {
                 alt="Landhaus Ücker"
                 width={200}
                 height={200}
-                className="logo-sharp h-14 w-auto sm:h-16"
+                className="logo-sharp h-14 w-auto sm:h-16 transition-[filter] duration-500"
+                style={
+                  isScrolled || !isHome
+                    ? { filter: "brightness(0) saturate(100%) invert(18%) sepia(25%) saturate(2000%) hue-rotate(95deg) brightness(95%)" }
+                    : undefined
+                }
                 priority
                 unoptimized
               />

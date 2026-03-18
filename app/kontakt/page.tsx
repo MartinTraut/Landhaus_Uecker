@@ -265,7 +265,7 @@ export default function KontaktPage() {
                   </div>
                 </div>
 
-                <div className="grid gap-5 sm:grid-cols-3">
+                <div className="grid gap-5 grid-cols-1 min-[400px]:grid-cols-2 sm:grid-cols-3">
                   <div>
                     <label
                       htmlFor="anreise"

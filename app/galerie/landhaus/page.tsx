@@ -1,73 +1,86 @@
-"use client";
+"use client"
 
-import { useRef, useState, useCallback } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import { GALLERY_IMAGES } from "@/lib/data";
-import { ArrowLeft, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef, useState, useCallback, useEffect } from "react"
+import Link from "next/link"
+import { motion, useInView, AnimatePresence } from "framer-motion"
+import { GALLERY_IMAGES } from "@/lib/data"
+import { CardStack, type CardStackItem } from "@/components/ui/card-stack"
+import { ArrowLeft, X, ChevronLeft, ChevronRight } from "lucide-react"
+import { useResponsiveCardSize } from "@/hooks/use-responsive-card-size"
 
-const images = GALLERY_IMAGES.landhaus;
+const images = GALLERY_IMAGES.landhaus
+
+const cardItems: CardStackItem[] = images.slice(0, 10).map((img, i) => ({
+  id: i,
+  title: img.alt,
+  imageSrc: img.src,
+}))
 
 function GalleryImage({
   image,
   index,
   onClick,
 }: {
-  image: { src: string; alt: string };
-  index: number;
-  onClick: () => void;
+  image: { src: string; alt: string }
+  index: number
+  onClick: () => void
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-40px" });
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, margin: "-40px" })
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={isInView ? { opacity: 1, scale: 1 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="cursor-pointer overflow-hidden rounded-2xl border border-warm-100 bg-white shadow-md"
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.4, delay: (index % 6) * 0.08 }}
+      className="cursor-pointer overflow-hidden rounded-2xl bg-warm-900 shadow-md"
       onClick={onClick}
     >
       <div className="relative aspect-[4/3]">
-        <Image
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={image.src}
           alt={image.alt}
-          fill
-          unoptimized
-          className="object-cover transition-transform duration-500 hover:scale-105"
+          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+          loading="lazy"
         />
       </div>
-      <p className="p-3 text-center font-serif text-base text-warm-800">
-        {image.alt}
-      </p>
     </motion.div>
-  );
+  )
 }
 
 export default function LandhausGaleriePage() {
-  const headerRef = useRef<HTMLDivElement>(null);
-  const headerInView = useInView(headerRef, { once: true });
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const headerRef = useRef<HTMLDivElement>(null)
+  const headerInView = useInView(headerRef, { once: true })
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const { cardWidth, cardHeight } = useResponsiveCardSize()
 
-  const closeLightbox = () => setLightboxIndex(null);
-
+  const closeLightbox = () => setLightboxIndex(null)
   const goNext = useCallback(() => {
     setLightboxIndex((prev) =>
       prev !== null ? (prev + 1) % images.length : null
-    );
-  }, []);
-
+    )
+  }, [])
   const goPrev = useCallback(() => {
     setLightboxIndex((prev) =>
       prev !== null ? (prev - 1 + images.length) % images.length : null
-    );
-  }, []);
+    )
+  }, [])
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (lightboxIndex === null) return
+      if (e.key === "Escape") closeLightbox()
+      if (e.key === "ArrowLeft") goPrev()
+      if (e.key === "ArrowRight") goNext()
+    }
+    window.addEventListener("keydown", handleKey)
+    return () => window.removeEventListener("keydown", handleKey)
+  }, [lightboxIndex, goNext, goPrev])
 
   return (
-    <main className="min-h-screen bg-warm-50 pt-28 pb-20">
-      {/* Back Link */}
+    <div className="min-h-screen bg-warm-50 pt-28 pb-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <Link
           href="/galerie"
@@ -78,25 +91,45 @@ export default function LandhausGaleriePage() {
         </Link>
       </div>
 
-      {/* Page Header */}
       <motion.div
         ref={headerRef}
         initial={{ opacity: 0, y: 30 }}
         animate={headerInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
-        className="mx-auto mb-14 max-w-6xl px-4 text-center sm:px-6"
+        className="mx-auto mb-10 max-w-6xl px-4 text-center sm:px-6"
       >
-        <h1 className="font-serif text-4xl font-bold text-warm-900 md:text-5xl lg:text-6xl">
-          Das Landhaus
+        <p className="accent-script mb-2 text-2xl text-forest-700 sm:text-3xl">
+          Bildergalerie
+        </p>
+        <h1 className="font-serif text-4xl font-bold text-warm-900 md:text-5xl">
+          Landhaus Ücker
         </h1>
-        <p className="mx-auto mt-5 max-w-3xl font-serif text-xl leading-relaxed text-warm-800 md:text-2xl">
-          Unser Landhaus Ücker in verschiedenen Jahreszeiten und Perspektiven.
+        <p className="mx-auto mt-4 max-w-2xl font-serif text-xl leading-relaxed text-warm-800">
+          Unser Landhaus in Obermaiselstein – zu jeder Jahreszeit.
+        </p>
+        <p className="mt-2 font-serif text-base text-warm-800/50">
+          {images.length} Bilder
         </p>
       </motion.div>
 
-      {/* Image Grid */}
+      {/* CardStack Hero */}
+      <div className="mx-auto mb-14 max-w-5xl px-4 sm:px-6">
+        <CardStack
+          items={cardItems}
+          autoAdvance
+          intervalMs={3500}
+          pauseOnHover
+          showDots={false}
+          cardWidth={cardWidth}
+          cardHeight={cardHeight}
+          maxVisible={5}
+          overlap={0.5}
+          spreadDeg={42}
+        />
+      </div>
+
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 min-[400px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
           {images.map((image, index) => (
             <GalleryImage
               key={image.src}
@@ -115,51 +148,44 @@ export default function LandhausGaleriePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4"
             onClick={closeLightbox}
           >
             <button
               onClick={closeLightbox}
-              className="absolute top-4 right-4 z-10 rounded-full bg-white/20 p-2 text-white backdrop-blur-sm hover:bg-white/30"
+              className="absolute top-4 right-4 z-10 rounded-full bg-white/15 p-2.5 text-white hover:bg-white/25"
             >
               <X className="h-6 w-6" />
             </button>
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                goPrev();
-              }}
-              className="absolute left-4 z-10 rounded-full bg-white/20 p-2 text-white backdrop-blur-sm hover:bg-white/30"
+              onClick={(e) => { e.stopPropagation(); goPrev() }}
+              className="absolute left-4 z-10 rounded-full bg-white/15 p-2.5 text-white hover:bg-white/25"
             >
-              <ChevronLeft className="h-8 w-8" />
+              <ChevronLeft className="h-7 w-7" />
             </button>
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                goNext();
-              }}
-              className="absolute right-4 z-10 rounded-full bg-white/20 p-2 text-white backdrop-blur-sm hover:bg-white/30"
+              onClick={(e) => { e.stopPropagation(); goNext() }}
+              className="absolute right-4 z-10 rounded-full bg-white/15 p-2.5 text-white hover:bg-white/25"
             >
-              <ChevronRight className="h-8 w-8" />
+              <ChevronRight className="h-7 w-7" />
             </button>
             <div
-              className="relative h-[80vh] w-full max-w-5xl"
+              className="flex max-h-[85vh] max-w-5xl items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={images[lightboxIndex].src}
                 alt={images[lightboxIndex].alt}
-                fill
-                unoptimized
-                className="object-contain"
+                className="max-h-[85vh] max-w-full rounded-lg object-contain"
               />
-              <p className="absolute bottom-0 left-0 right-0 bg-black/50 p-4 text-center font-serif text-lg text-white">
-                {images[lightboxIndex].alt}
-              </p>
             </div>
+            <p className="absolute bottom-6 left-1/2 -translate-x-1/2 font-serif text-base text-white/60">
+              {lightboxIndex + 1} / {images.length}
+            </p>
           </motion.div>
         )}
       </AnimatePresence>
-    </main>
-  );
+    </div>
+  )
 }

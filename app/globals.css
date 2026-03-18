@@ -34,13 +34,14 @@
   --color-warm-800: oklch(0.25 0.035 50);
   --color-warm-900: oklch(0.16 0.025 50);
 
-  --color-forest-50: oklch(0.97 0.015 148);
-  --color-forest-100: oklch(0.93 0.035 148);
-  --color-forest-200: oklch(0.88 0.05 148);
-  --color-forest-600: oklch(0.40 0.09 148);
-  --color-forest-700: oklch(0.33 0.085 148);
-  --color-forest-800: oklch(0.27 0.075 148);
-  --color-forest-900: oklch(0.20 0.06 148);
+  /* Grüntöne basierend auf Logo-Grün #396439 */
+  --color-forest-50: oklch(0.96 0.02 152);
+  --color-forest-100: oklch(0.92 0.04 152);
+  --color-forest-200: oklch(0.86 0.06 152);
+  --color-forest-600: oklch(0.42 0.08 152);
+  --color-forest-700: oklch(0.35 0.075 152);
+  --color-forest-800: oklch(0.28 0.065 152);
+  --color-forest-900: oklch(0.22 0.05 152);
 }
 
 @theme inline {
@@ -116,11 +117,26 @@
   h2 { font-size: clamp(1.75rem, 4vw, 2.75rem); }
   h3 { font-size: clamp(1.35rem, 3vw, 1.85rem); }
 
-  /* Fließtext: Cormorant Garamond – elegant aber leserlich */
+  /* Fließtext: Cormorant Garamond – kräftig und gut lesbar */
   p {
     font-family: var(--font-serif);
     font-size: 1.15rem;
     line-height: 1.8;
+    font-weight: 600;
+  }
+
+  /* Allgemein kräftigere Schrift */
+  body {
+    font-weight: 600;
+  }
+
+  span, li, label, td, th, a {
+    font-weight: inherit;
+  }
+
+  /* Überschriften noch kräftiger */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
   }
 
   /* Schreibschrift-Akzent: Logo-Stil für besondere Wörter */

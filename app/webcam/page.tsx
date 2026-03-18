@@ -50,16 +50,21 @@ export default function WebcamPage() {
             </div>
           </div>
 
-          {/* Webcam iframe */}
-          <div className="relative aspect-video w-full">
-            <iframe
-              src={WEBCAM_URL}
-              className="absolute inset-0 h-full w-full"
-              title="Webcam Obermaiselstein"
-              allowFullScreen
-              loading="lazy"
+          {/* Webcam Live-Bild */}
+          <a
+            href={WEBCAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://www.foto-webcam.eu/webcam/obermaiselstein/current/1920.jpg"
+              alt="Live Webcam Obermaiselstein - Aktueller Blick auf die Allgäuer Alpen"
+              className="w-full"
+              style={{ display: "block" }}
             />
-          </div>
+          </a>
 
           {/* Footer */}
           <div className="flex flex-col items-center gap-4 px-6 py-6 sm:flex-row sm:justify-between">
