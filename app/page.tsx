@@ -127,8 +127,8 @@ export default function HomePage() {
           </div>
         ))}
 
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
+        {/* Dark overlay - stärker für besseren Kontrast */}
+        <div className="absolute inset-0 bg-black/55" />
 
         {/* Hero content */}
         <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 pt-24 text-center text-white">
@@ -136,7 +136,8 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mb-4 font-serif text-base tracking-[0.2em] uppercase text-white/80 sm:text-lg"
+            className="mb-4 font-serif text-base tracking-[0.2em] uppercase text-white sm:text-lg"
+            style={{ textShadow: "0 2px 8px rgba(0,0,0,0.5)" }}
           >
             Ferienwohnungen auf 900m Höhe
           </motion.p>
@@ -146,6 +147,7 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mb-6 max-w-4xl font-serif text-3xl leading-tight font-semibold sm:text-4xl md:text-5xl lg:text-6xl"
+            style={{ textShadow: "0 3px 12px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.4)" }}
           >
             Ein herzliches{" "}
             <span className="accent-script text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white">
@@ -159,7 +161,8 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="mb-10 max-w-2xl font-serif text-lg leading-relaxed text-white/90 sm:text-xl"
+            className="mb-10 max-w-2xl font-serif text-lg leading-relaxed text-white sm:text-xl"
+            style={{ textShadow: "0 2px 8px rgba(0,0,0,0.5)" }}
           >
             Sie suchen Ruhe, um sich in Ihrem wohlverdienten Urlaub so richtig
             erholen zu können? Bei uns werden Sie fündig.
@@ -187,21 +190,7 @@ export default function HomePage() {
           </motion.div>
         </div>
 
-        {/* Image indicators */}
-        <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 gap-2.5">
-          {heroImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentImage(index)}
-              aria-label={`Bild ${index + 1} anzeigen`}
-              className={`h-2.5 rounded-full transition-all duration-300 ${
-                index === currentImage
-                  ? "w-8 bg-white"
-                  : "w-2.5 bg-white/50 hover:bg-white/75"
-              }`}
-            />
-          ))}
-        </div>
+{/* Bild-Indikatoren entfernt – Bilder rotieren automatisch */}
       </section>
 
       {/* ── Über uns Section ── */}
