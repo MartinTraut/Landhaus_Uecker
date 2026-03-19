@@ -29,12 +29,10 @@ function GalleryImage({
   const isInView = useInView(ref, { once: true, margin: "-40px" })
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.4, delay: (index % 6) * 0.08 }}
-      className="cursor-pointer overflow-hidden rounded-2xl bg-warm-900 shadow-md"
+      className={`cursor-pointer overflow-hidden rounded-2xl bg-warm-900 shadow-md transition-all duration-500 ease-out ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+      style={{ transitionDelay: `${(index % 6) * 60}ms` }}
       onClick={onClick}
     >
       <div className="relative aspect-[4/3]">
@@ -46,7 +44,7 @@ function GalleryImage({
           loading="lazy"
         />
       </div>
-    </motion.div>
+    </div>
   )
 }
 
@@ -91,12 +89,9 @@ export default function UmgebungGaleriePage() {
         </Link>
       </div>
 
-      <motion.div
+      <div
         ref={headerRef}
-        initial={{ opacity: 0, y: 30 }}
-        animate={headerInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6 }}
-        className="mx-auto mb-10 max-w-6xl px-4 text-center sm:px-6"
+        className={`mx-auto mb-10 max-w-6xl px-4 text-center sm:px-6 transition-all duration-700 ease-out ${headerInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
       >
         <p className="accent-script mb-2 text-2xl text-forest-700 sm:text-3xl">
           Bildergalerie
@@ -110,7 +105,7 @@ export default function UmgebungGaleriePage() {
         <p className="mt-2 font-serif text-base text-warm-800/50">
           {images.length} Bilder
         </p>
-      </motion.div>
+      </div>
 
       <div className="mx-auto mb-14 max-w-5xl px-4 sm:px-6">
         <CardStack

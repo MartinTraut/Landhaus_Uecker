@@ -217,3 +217,44 @@ img, video, iframe {
   max-width: 100%;
   height: auto;
 }
+
+/* ── GPU-beschleunigte CSS Animationen ── */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceGentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+.animate-fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+  will-change: opacity, transform;
+}
+
+.animate-bounce-gentle {
+  animation: bounceGentle 2.5s ease-in-out infinite;
+}
+
+/* Reduzierte Animationen für Nutzer die das wollen */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  .animate-bounce-gentle {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}

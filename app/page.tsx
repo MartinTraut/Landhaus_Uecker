@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { motion, useInView } from "framer-motion"
+import { useInView } from "framer-motion"
 import { Phone, Mail, MapPin, ArrowRight, Mountain, Home, Maximize, Users, ChevronDown } from "lucide-react"
 
 const heroImages = [
@@ -80,18 +80,21 @@ function FadeInSection({
   delay?: number
 }) {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-80px" })
+  const isInView = useInView(ref, { once: true, margin: "-50px" })
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-      transition={{ duration: 0.7, delay, ease: "easeOut" }}
-      className={className}
+      className={`transition-all duration-700 ease-out ${className}`}
+      style={{
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "translateY(0)" : "translateY(20px)",
+        transitionDelay: `${delay * 1000}ms`,
+        willChange: "opacity, transform",
+      }}
     >
       {children}
-    </motion.div>
+    </div>
   )
 }
 
@@ -130,24 +133,18 @@ export default function HomePage() {
         {/* Dark overlay - stärker für besseren Kontrast */}
         <div className="absolute inset-0 bg-black/55" />
 
-        {/* Hero content */}
+        {/* Hero content — CSS-only Animationen für Performance */}
         <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 pt-24 text-center text-white">
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mb-4 font-serif text-base tracking-[0.2em] uppercase text-white sm:text-lg"
-            style={{ textShadow: "0 2px 8px rgba(0,0,0,0.5)" }}
+          <p
+            className="mb-4 font-serif text-base tracking-[0.2em] uppercase text-white sm:text-lg animate-fade-in-up"
+            style={{ textShadow: "0 2px 8px rgba(0,0,0,0.5)", animationDelay: "0.2s" }}
           >
             Ferienwohnungen auf 900m Höhe
-          </motion.p>
+          </p>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mb-6 max-w-4xl font-serif text-3xl leading-tight font-semibold sm:text-4xl md:text-5xl lg:text-6xl"
-            style={{ textShadow: "0 3px 12px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.4)" }}
+          <h1
+            className="mb-6 max-w-4xl font-serif text-3xl leading-tight font-semibold sm:text-4xl md:text-5xl lg:text-6xl animate-fade-in-up"
+            style={{ textShadow: "0 3px 12px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.4)", animationDelay: "0.5s" }}
           >
             Ein herzliches{" "}
             <span className="accent-script text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white">
@@ -155,25 +152,19 @@ export default function HomePage() {
             </span>
             <br />
             im Landhaus Ücker
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="mb-10 max-w-2xl font-serif text-lg leading-relaxed text-white sm:text-xl"
-            style={{ textShadow: "0 2px 8px rgba(0,0,0,0.5)" }}
+          <p
+            className="mb-10 max-w-2xl font-serif text-lg leading-relaxed text-white sm:text-xl animate-fade-in-up"
+            style={{ textShadow: "0 2px 8px rgba(0,0,0,0.5)", animationDelay: "0.8s" }}
           >
             Sie suchen Ruhe, um sich in Ihrem wohlverdienten Urlaub so richtig
             erholen zu können? Bei uns werden Sie fündig.
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1 }}
-            className="flex flex-col gap-4 sm:flex-row"
-            style={{ WebkitBackfaceVisibility: "hidden" }}
+          <div
+            className="flex flex-col gap-4 sm:flex-row animate-fade-in-up"
+            style={{ animationDelay: "1.1s" }}
           >
             <Link
               href="/wohnen"
@@ -190,28 +181,23 @@ export default function HomePage() {
             >
               Jetzt buchen
             </a>
-          </motion.div>
+          </div>
         </div>
 
       </section>
 
       {/* Scroll-Pfeil unter dem Hero */}
       <div className="relative z-10 -mt-8 flex justify-center">
-        <motion.a
+        <a
           href="#ueber-uns"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: [0, 6, 0] }}
-          transition={{
-            opacity: { delay: 1.5, duration: 0.6 },
-            y: { repeat: Infinity, duration: 2, ease: "easeInOut" },
-          }}
-          className="flex flex-col items-center gap-1 rounded-full bg-white px-6 py-3 shadow-lg transition-shadow hover:shadow-xl"
+          className="flex flex-col items-center gap-1 rounded-full bg-white px-6 py-3 shadow-lg animate-fade-in-up animate-bounce-gentle"
+          style={{ animationDelay: "1.5s" }}
         >
           <span className="font-serif text-sm font-semibold tracking-wider text-forest-700">
             Mehr entdecken
           </span>
           <ChevronDown className="h-5 w-5 text-forest-700" />
-        </motion.a>
+        </a>
       </div>
 
       {/* ── Über uns Section ── */}
