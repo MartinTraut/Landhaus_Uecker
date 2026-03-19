@@ -101,7 +101,7 @@ export default function HomePage() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % heroImages.length)
-    }, 6000)
+    }, 8000)
     return () => clearInterval(interval)
   }, [])
 
@@ -113,7 +113,7 @@ export default function HomePage() {
         {heroImages.map((img, index) => (
           <div
             key={img.src}
-            className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
+            className="absolute inset-0 transition-opacity duration-[2500ms] ease-in-out"
             style={{ opacity: index === currentImage ? 1 : 0 }}
           >
             <Image

@@ -1,4 +1,3 @@
-import Image from "next/image"
 import Link from "next/link"
 import { MapPin, Phone, Mail, CloudSun } from "lucide-react"
 
@@ -10,13 +9,11 @@ export function Footer() {
           {/* Logo + Beschreibung */}
           <div className="sm:col-span-2 lg:col-span-1">
             <Link href="/">
-              <Image
-                src="https://www.xn--landhaus-cker-4ob.de/images/3187/logo-walter2.png"
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo.png"
                 alt="Landhaus Ücker Logo"
-                width={200}
-                height={200}
-                className="logo-sharp h-16 w-auto"
-                unoptimized
+                className="h-auto w-40"
               />
             </Link>
             <p className="mt-4 font-serif text-[14px] leading-relaxed text-white/50">

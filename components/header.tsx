@@ -116,23 +116,14 @@ export function Header() {
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Logo + Navigation in einer Zeile */}
-          <div className="flex items-center justify-between py-3 lg:py-2">
+          <div className="flex items-center justify-between py-3">
             {/* Logo links */}
-            <Link href="/" className="shrink-0">
+            <Link href="/" className="shrink-0 py-2.5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://www.xn--landhaus-cker-4ob.de/images/3187/logo-walter2.png"
+                src={isScrolled || !isHome ? "/logo-dark.png" : "/logo.png"}
                 alt="Landhaus Ücker"
-                width={200}
-                height={200}
-                className="h-14 w-auto sm:h-16 transition-[filter] duration-500"
-                style={{
-                  imageRendering: "auto",
-                  WebkitFontSmoothing: "antialiased",
-                  ...(isScrolled || !isHome
-                    ? { filter: "brightness(0) saturate(100%) invert(18%) sepia(25%) saturate(2000%) hue-rotate(95deg) brightness(95%)" }
-                    : {}),
-                }}
+                className="h-auto w-36 sm:w-44 lg:w-48"
                 fetchPriority="high"
                 decoding="async"
               />
