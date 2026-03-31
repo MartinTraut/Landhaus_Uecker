@@ -200,12 +200,13 @@ export default function KontaktPage() {
                 Anfrage senden
               </h2>
 
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-                <div className="space-y-4 sm:space-y-0 sm:grid sm:gap-5 sm:grid-cols-2">
+              <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
+                {/* Name + Email */}
+                <div className="grid gap-4 sm:gap-5 md:grid-cols-2">
                   <div>
                     <label
                       htmlFor="name"
-                      className="mb-1.5 block font-serif text-base font-semibold text-warm-900"
+                      className="mb-2 block font-serif text-base font-semibold text-warm-900"
                     >
                       Name <span className="text-red-600">*</span>
                     </label>
@@ -223,7 +224,7 @@ export default function KontaktPage() {
                   <div>
                     <label
                       htmlFor="email"
-                      className="mb-1.5 block font-serif text-base font-semibold text-warm-900"
+                      className="mb-2 block font-serif text-base font-semibold text-warm-900"
                     >
                       E-Mail <span className="text-red-600">*</span>
                     </label>
@@ -240,11 +241,12 @@ export default function KontaktPage() {
                   </div>
                 </div>
 
-                <div className="space-y-4 sm:space-y-0 sm:grid sm:gap-5 sm:grid-cols-2">
+                {/* Telefon + Wohnung */}
+                <div className="grid gap-4 sm:gap-5 md:grid-cols-2">
                   <div>
                     <label
                       htmlFor="telefon"
-                      className="mb-1.5 block font-serif text-base font-semibold text-warm-900"
+                      className="mb-2 block font-serif text-base font-semibold text-warm-900"
                     >
                       Telefon
                     </label>
@@ -261,7 +263,7 @@ export default function KontaktPage() {
                   <div>
                     <label
                       htmlFor="wohnung"
-                      className="mb-1.5 block font-serif text-base font-semibold text-warm-900"
+                      className="mb-2 block font-serif text-base font-semibold text-warm-900"
                     >
                       Gewünschte Wohnung
                     </label>
@@ -282,11 +284,12 @@ export default function KontaktPage() {
                   </div>
                 </div>
 
-                <div className="space-y-4 sm:space-y-0 sm:grid sm:gap-5 sm:grid-cols-3">
+                {/* Anreise + Abreise + Personen */}
+                <div className="grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
                   <div>
                     <label
                       htmlFor="anreise"
-                      className="mb-1.5 block font-serif text-sm font-semibold text-warm-900 sm:text-base"
+                      className="mb-2 block font-serif text-base font-semibold text-warm-900"
                     >
                       Anreise
                     </label>
@@ -302,7 +305,7 @@ export default function KontaktPage() {
                   <div>
                     <label
                       htmlFor="abreise"
-                      className="mb-1.5 block font-serif text-sm font-semibold text-warm-900 sm:text-base"
+                      className="mb-2 block font-serif text-base font-semibold text-warm-900"
                     >
                       Abreise
                     </label>
@@ -315,10 +318,10 @@ export default function KontaktPage() {
                       className={inputClasses}
                     />
                   </div>
-                  <div>
+                  <div className="sm:col-span-2 lg:col-span-1">
                     <label
                       htmlFor="personen"
-                      className="mb-1.5 block font-serif text-sm font-semibold text-warm-900 sm:text-base"
+                      className="mb-2 block font-serif text-base font-semibold text-warm-900"
                     >
                       Personen
                     </label>
