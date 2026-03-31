@@ -267,32 +267,32 @@ export default function ApartmentDetail({ slug }: { slug: string }) {
           </h2>
           <div className="space-y-0 divide-y divide-forest-100">
             <div className="flex justify-between items-center gap-2 py-4">
-              <span className="font-serif text-base text-warm-800 sm:text-lg">1. Nacht</span>
-              <span className="font-serif text-base font-semibold text-warm-900 sm:text-lg">{apartment.priceFirst}</span>
+              <span className="font-serif text-lg text-warm-800 sm:text-xl">1. Nacht</span>
+              <span className="font-serif text-lg font-bold text-warm-900 sm:text-xl">{apartment.priceFirst}</span>
             </div>
             <div className="flex justify-between items-center gap-2 py-4 bg-forest-100/50 -mx-6 md:-mx-10 px-6 md:px-10 rounded-xl">
-              <span className="font-serif text-base font-semibold text-forest-800 sm:text-lg">Ab 2. Nacht</span>
-              <span className="font-serif text-base font-bold text-forest-800 sm:text-lg">{apartment.priceFollowing}</span>
+              <span className="font-serif text-lg font-semibold text-forest-800 sm:text-xl">Ab 2. Nacht</span>
+              <span className="font-serif text-lg font-bold text-forest-800 sm:text-xl">{apartment.priceFollowing}</span>
             </div>
             <div className="flex justify-between items-center gap-2 py-4">
-              <span className="font-serif text-base text-warm-800 sm:text-lg">Mindestaufenthalt</span>
-              <span className="font-serif text-base font-semibold text-warm-900 sm:text-lg">{apartment.minNights}</span>
+              <span className="font-serif text-lg text-warm-800 sm:text-xl">Mindestaufenthalt</span>
+              <span className="font-serif text-lg font-bold text-warm-900 sm:text-xl">{apartment.minNights}</span>
             </div>
             <div className="flex justify-between items-center gap-2 py-4">
-              <span className="font-serif text-base text-warm-800 sm:text-lg">Zusatzperson</span>
-              <span className="font-serif text-base font-semibold text-warm-900 sm:text-lg">{apartment.additionalPerson}</span>
+              <span className="font-serif text-lg text-warm-800 sm:text-xl">Zusatzperson</span>
+              <span className="font-serif text-lg font-bold text-warm-900 sm:text-xl">{apartment.additionalPerson}</span>
             </div>
             <div className="flex justify-between items-center gap-2 py-4">
-              <span className="font-serif text-base text-warm-800 sm:text-lg">Kurbeitrag</span>
-              <span className="font-serif text-base font-semibold text-warm-900 text-right sm:text-lg">{apartment.kurbeitrag}</span>
+              <span className="font-serif text-lg text-warm-800 sm:text-xl">Kurbeitrag</span>
+              <span className="font-serif text-lg font-bold text-warm-900 text-right sm:text-xl">{apartment.kurbeitrag}</span>
             </div>
             <div className="flex justify-between items-center gap-2 py-4">
-              <span className="font-serif text-base text-warm-800 sm:text-lg">Haustier</span>
-              <span className="font-serif text-base font-semibold text-warm-900 sm:text-lg">7 € / Nacht (auf Anfrage)</span>
+              <span className="font-serif text-lg text-warm-800 sm:text-xl">Haustier</span>
+              <span className="font-serif text-lg font-bold text-warm-900 sm:text-xl">7 € / Nacht (auf Anfrage)</span>
             </div>
             <div className="flex justify-between items-center gap-2 py-4">
-              <span className="font-serif text-base text-warm-800 sm:text-lg">WLAN</span>
-              <span className="font-serif text-base font-semibold text-forest-700 sm:text-lg">kostenlos (6–24 Uhr)</span>
+              <span className="font-serif text-lg text-warm-800 sm:text-xl">WLAN</span>
+              <span className="font-serif text-lg font-bold text-forest-700 sm:text-xl">kostenlos (6–24 Uhr)</span>
             </div>
           </div>
           <p className="mt-4 font-serif text-base text-warm-800 italic">
