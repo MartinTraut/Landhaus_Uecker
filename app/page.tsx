@@ -114,6 +114,12 @@ function FadeInSection({
 
 export default function HomePage() {
   const [currentImage, setCurrentImage] = useState(0)
+  const [heroHeight, setHeroHeight] = useState<string>("100svh")
+
+  useEffect(() => {
+    // Fixe Höhe beim Laden setzen, damit die Adressleiste kein Resize/Zoom verursacht
+    setHeroHeight(`${window.innerHeight}px`)
+  }, [])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -125,7 +131,10 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero Section ── */}
-      <section className="relative h-[100svh] min-h-[500px] w-full overflow-hidden sm:h-[90vh] sm:min-h-[600px]" style={{ transform: "translate3d(0,0,0)" }}>
+      <section
+        className="relative min-h-[500px] w-full overflow-hidden sm:min-h-[600px]"
+        style={{ height: heroHeight, transform: "translate3d(0,0,0)" }}
+      >
         {/* Background images with opacity transition */}
         {heroImages.map((img, index) => (
           <div

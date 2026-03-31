@@ -195,13 +195,13 @@ export default function KontaktPage() {
 
           {/* Rechte Spalte: Formular */}
           <FadeIn delay={0.15} className="lg:col-span-3">
-            <div className="rounded-2xl border border-warm-100 bg-white p-4 shadow-md sm:p-6 md:p-8">
+            <div className="overflow-hidden rounded-2xl border border-warm-100 bg-white p-4 shadow-md sm:p-6 md:p-8">
               <h2 className="mb-5 font-serif text-xl font-bold text-warm-900 sm:mb-6 sm:text-2xl md:text-3xl">
                 Anfrage senden
               </h2>
 
               <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-                <div className="grid gap-5 sm:grid-cols-2">
+                <div className="space-y-4 sm:space-y-0 sm:grid sm:gap-5 sm:grid-cols-2">
                   <div>
                     <label
                       htmlFor="name"
@@ -240,7 +240,7 @@ export default function KontaktPage() {
                   </div>
                 </div>
 
-                <div className="grid gap-5 sm:grid-cols-2">
+                <div className="space-y-4 sm:space-y-0 sm:grid sm:gap-5 sm:grid-cols-2">
                   <div>
                     <label
                       htmlFor="telefon"
@@ -282,7 +282,7 @@ export default function KontaktPage() {
                   </div>
                 </div>
 
-                <div className="grid gap-5 grid-cols-2 sm:grid-cols-3">
+                <div className="space-y-4 sm:space-y-0 sm:grid sm:gap-5 sm:grid-cols-3">
                   <div>
                     <label
                       htmlFor="anreise"
@@ -315,7 +315,7 @@ export default function KontaktPage() {
                       className={inputClasses}
                     />
                   </div>
-                  <div className="col-span-2 sm:col-span-1">
+                  <div>
                     <label
                       htmlFor="personen"
                       className="mb-1.5 block font-serif text-sm font-semibold text-warm-900 sm:text-base"
