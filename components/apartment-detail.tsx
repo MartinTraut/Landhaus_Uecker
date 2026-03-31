@@ -109,16 +109,16 @@ function DetailSection({
       transition={{ duration: 0.5, delay }}
       className="bg-white rounded-2xl shadow-sm border border-warm-100 p-6 md:p-8"
     >
-      <div className="flex items-center gap-3 mb-5">
-        <div className="w-10 h-10 bg-forest-50 rounded-xl flex items-center justify-center text-forest-700">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="w-12 h-12 bg-forest-50 rounded-xl flex items-center justify-center text-forest-700">
           {icon}
         </div>
-        <h3 className="font-serif text-2xl font-bold text-warm-900">{title}</h3>
+        <h3 className="font-serif text-2xl font-bold text-warm-900 sm:text-3xl">{title}</h3>
       </div>
-      <ul className="space-y-3">
+      <ul className="space-y-4">
         {items.map((item) => (
-          <li key={item} className="flex items-start gap-3 font-serif text-lg text-warm-800">
-            <svg className="w-5 h-5 text-forest-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <li key={item} className="flex items-start gap-3 font-serif text-lg text-warm-800 sm:text-xl">
+            <svg className="w-5 h-5 text-forest-600 mt-1.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
             <span>{item}</span>
@@ -178,30 +178,30 @@ export default function ApartmentDetail({ slug }: { slug: string }) {
         >
           <h1 className="font-serif text-4xl md:text-5xl font-bold text-warm-900">{apartment.name}</h1>
 
-          <div className="flex flex-wrap gap-3 mt-5">
-            <span className="inline-flex items-center gap-2 bg-warm-100 text-warm-900 font-serif text-lg px-4 py-2 rounded-xl">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+          <div className="flex flex-wrap gap-4 mt-6">
+            <span className="inline-flex items-center gap-2.5 bg-warm-100 text-warm-900 font-serif text-xl font-semibold px-5 py-3 rounded-xl">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
               {apartment.floor}
             </span>
-            <span className="inline-flex items-center gap-2 bg-warm-100 text-warm-900 font-serif text-lg px-4 py-2 rounded-xl">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
+            <span className="inline-flex items-center gap-2.5 bg-warm-100 text-warm-900 font-serif text-xl font-semibold px-5 py-3 rounded-xl">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
               {apartment.size}
             </span>
-            <span className="inline-flex items-center gap-2 bg-warm-100 text-warm-900 font-serif text-lg px-4 py-2 rounded-xl">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+            <span className="inline-flex items-center gap-2.5 bg-warm-100 text-warm-900 font-serif text-xl font-semibold px-5 py-3 rounded-xl">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
               {apartment.persons}
             </span>
           </div>
 
-          <p className="mt-6 font-serif text-xl text-warm-800 leading-relaxed max-w-3xl">
+          <p className="mt-8 font-serif text-xl text-warm-800 leading-relaxed max-w-3xl sm:text-2xl">
             {apartment.longDescription}
           </p>
 
           {/* Highlights */}
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3">
             {apartment.highlights.map((h) => (
-              <span key={h} className="inline-flex items-center gap-2 bg-forest-50 text-forest-800 font-serif text-base px-4 py-2 rounded-xl border border-forest-100">
-                <svg className="w-4 h-4 text-forest-600" fill="currentColor" viewBox="0 0 20 20">
+              <span key={h} className="inline-flex items-center gap-2.5 bg-forest-50 text-forest-800 font-serif text-lg px-5 py-2.5 rounded-xl border border-forest-100">
+                <svg className="w-5 h-5 text-forest-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
                 {h}
