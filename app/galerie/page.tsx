@@ -1,8 +1,7 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useState, useEffect } from "react"
 import Link from "next/link"
-import { motion, useInView } from "framer-motion"
 import { GALLERY_IMAGES } from "@/lib/data"
 import { CardStack, type CardStackItem } from "@/components/ui/card-stack"
 import { ArrowRight } from "lucide-react"
@@ -53,16 +52,34 @@ function GallerySection({
   index: number
 }) {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: "-60px" })
-  const { cardWidth, cardHeight } = useResponsiveCardSize()
+  const [isInView, setIsInView] = useState(false)
+  const { cardWidth, cardHeight, maxVisible } = useResponsiveCardSize()
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true)
+          observer.unobserve(el)
+        }
+      },
+      { rootMargin: "-60px" }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.15 }}
-      className="rounded-2xl border border-warm-200 bg-white p-4 shadow-lg sm:p-6 md:p-8"
+      className="rounded-2xl border border-warm-200 bg-white p-4 shadow-lg sm:p-6 md:p-8 transition-all duration-600 ease-out"
+      style={{
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "translateY(0)" : "translateY(40px)",
+        transitionDelay: `${index * 150}ms`,
+      }}
     >
       <div className="mb-6 text-center">
         <p className="accent-script mb-1 text-xl text-forest-700 sm:text-2xl">
@@ -84,7 +101,7 @@ function GallerySection({
         showDots={false}
         cardWidth={cardWidth}
         cardHeight={cardHeight}
-        maxVisible={5}
+        maxVisible={maxVisible}
         overlap={0.5}
         spreadDeg={40}
         depthPx={100}
@@ -101,22 +118,39 @@ function GallerySection({
           <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
         </Link>
       </div>
-    </motion.div>
+    </div>
   )
 }
 
 export default function GaleriePage() {
   const headerRef = useRef<HTMLDivElement>(null)
-  const headerInView = useInView(headerRef, { once: true })
+  const [headerInView, setHeaderInView] = useState(false)
+
+  useEffect(() => {
+    const el = headerRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHeaderInView(true)
+          observer.unobserve(el)
+        }
+      },
+      { rootMargin: "0px" }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <div className="min-h-screen bg-warm-50 pt-28 pb-20">
-      <motion.div
+      <div
         ref={headerRef}
-        initial={{ opacity: 0, y: 30 }}
-        animate={headerInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6 }}
-        className="mx-auto mb-14 max-w-6xl px-4 text-center sm:px-6"
+        className="mx-auto mb-14 max-w-6xl px-4 text-center sm:px-6 transition-all duration-600 ease-out"
+        style={{
+          opacity: headerInView ? 1 : 0,
+          transform: headerInView ? "translateY(0)" : "translateY(30px)",
+        }}
       >
         <p className="accent-script mb-2 text-2xl text-forest-700 sm:text-3xl">
           Impressionen
@@ -128,7 +162,7 @@ export default function GaleriePage() {
           Entdecken Sie das Landhaus Ücker, die wunderschöne Umgebung und
           beliebte Ausflugsziele in Bildern.
         </p>
-      </motion.div>
+      </div>
 
       <div className="mx-auto max-w-5xl space-y-12 px-4 sm:px-6">
         {sections.map((section, index) => (

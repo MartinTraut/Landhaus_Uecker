@@ -167,11 +167,11 @@ export function CardStack<T extends CardStackItem>({
         onKeyDown={onKeyDown}
       >
         <div
-          className="pointer-events-none absolute inset-x-0 top-6 mx-auto h-48 w-[70%] rounded-full bg-black/5 blur-3xl dark:bg-white/5"
+          className="pointer-events-none absolute inset-x-0 top-6 mx-auto h-48 w-[70%] rounded-full bg-black/5 blur-xl dark:bg-white/5"
           aria-hidden="true"
         />
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 mx-auto h-40 w-[76%] rounded-full bg-black/10 blur-3xl dark:bg-black/30"
+          className="pointer-events-none absolute inset-x-0 bottom-0 mx-auto h-40 w-[76%] rounded-full bg-black/10 blur-xl dark:bg-black/30"
           aria-hidden="true"
         />
 
@@ -221,8 +221,8 @@ export function CardStack<T extends CardStackItem>({
                 <motion.div
                   key={item.id}
                   className={cn(
-                    "absolute bottom-0 rounded-2xl border-4 border-black/10 dark:border-white/10 overflow-hidden shadow-xl",
-                    "will-change-transform select-none",
+                    "absolute bottom-0 rounded-2xl overflow-hidden shadow-xl",
+                    "select-none",
                     isActive
                       ? "cursor-grab active:cursor-grabbing"
                       : "cursor-pointer",
@@ -231,7 +231,7 @@ export function CardStack<T extends CardStackItem>({
                     width: cardWidth,
                     height: cardHeight,
                     zIndex,
-                    transformStyle: "preserve-3d",
+                    willChange: isActive ? "transform" : "auto",
                   }}
                   initial={
                     reduceMotion
@@ -241,7 +241,6 @@ export function CardStack<T extends CardStackItem>({
                           y: y + 40,
                           x,
                           rotateZ,
-                          rotateX,
                           scale,
                         }
                   }
@@ -250,7 +249,6 @@ export function CardStack<T extends CardStackItem>({
                     x,
                     y: y + lift,
                     rotateZ,
-                    rotateX,
                     scale,
                   }}
                   transition={{
@@ -261,19 +259,11 @@ export function CardStack<T extends CardStackItem>({
                   onClick={() => setActive(i)}
                   {...dragProps}
                 >
-                  <div
-                    className="h-full w-full"
-                    style={{
-                      transform: `translateZ(${z}px)`,
-                      transformStyle: "preserve-3d",
-                    }}
-                  >
-                    {renderCard ? (
-                      renderCard(item, { active: isActive })
-                    ) : (
-                      <DefaultFanCard item={item} active={isActive} />
-                    )}
-                  </div>
+                  {renderCard ? (
+                    renderCard(item, { active: isActive })
+                  ) : (
+                    <DefaultFanCard item={item} active={isActive} />
+                  )}
                 </motion.div>
               );
             })}
@@ -320,25 +310,26 @@ export function CardStack<T extends CardStackItem>({
 
 function DefaultFanCard({ item }: { item: CardStackItem; active: boolean }) {
   return (
-    <div className="relative h-full w-full">
-      <div className="absolute inset-0">
-        {item.imageSrc ? (
-          <img
-            src={item.imageSrc}
-            alt={item.title}
-            className="h-full w-full object-cover"
-            draggable={false}
-            loading="eager"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center bg-warm-100 text-sm text-warm-800/50">
-            No image
-          </div>
-        )}
-      </div>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-      <div className="relative z-10 flex h-full flex-col justify-end p-5">
-        <div className="truncate font-serif text-lg font-semibold text-white">
+    <div
+      className="relative h-full w-full"
+      style={
+        item.imageSrc
+          ? {
+              backgroundImage: `url(${item.imageSrc})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }
+          : undefined
+      }
+    >
+      {!item.imageSrc && (
+        <div className="flex h-full w-full items-center justify-center bg-warm-100 text-sm text-warm-800/50">
+          No image
+        </div>
+      )}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 z-10 p-4">
+        <div className="truncate font-serif text-base font-semibold text-white drop-shadow-md sm:text-lg">
           {item.title}
         </div>
         {item.description ? (

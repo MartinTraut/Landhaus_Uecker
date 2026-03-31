@@ -231,6 +231,15 @@ img, video, iframe {
   }
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
 @keyframes bounceGentle {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(6px); }
@@ -246,10 +255,21 @@ img, video, iframe {
   animation: bounceGentle 2.5s ease-in-out infinite;
 }
 
+@keyframes pulseArrow {
+  0%, 100% { opacity: 0.6; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(6px); }
+}
+
+.animate-pulse-arrow {
+  animation: pulseArrow 1.8s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
 /* Reduzierte Animationen für Nutzer die das wollen */
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-in-up,
-  .animate-bounce-gentle {
+  .animate-bounce-gentle,
+  .animate-pulse-arrow {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;

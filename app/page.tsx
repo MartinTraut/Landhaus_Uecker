@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { useInView } from "framer-motion"
 import { Phone, Mail, MapPin, ArrowRight, Mountain, Home, Maximize, Users, ChevronDown } from "lucide-react"
 
 const heroImages = [
@@ -79,8 +78,24 @@ function FadeInSection({
   className?: string
   delay?: number
 }) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-50px" })
+  const ref = useRef<HTMLDivElement>(null)
+  const [isInView, setIsInView] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true)
+          observer.unobserve(el)
+        }
+      },
+      { rootMargin: "-50px" }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <div
@@ -90,7 +105,6 @@ function FadeInSection({
         opacity: isInView ? 1 : 0,
         transform: isInView ? "translateY(0)" : "translateY(20px)",
         transitionDelay: `${delay * 1000}ms`,
-        willChange: "opacity, transform",
       }}
     >
       {children}
@@ -124,7 +138,7 @@ export default function HomePage() {
               alt={img.alt}
               fill
               className="object-cover"
-              unoptimized
+              sizes="100vw"
               priority={index === 0}
             />
           </div>
@@ -187,16 +201,16 @@ export default function HomePage() {
       </section>
 
       {/* Scroll-Pfeil unter dem Hero */}
-      <div className="relative z-10 -mt-8 flex justify-center">
+      <div className="relative z-10 -mt-6 flex justify-center">
         <a
           href="#ueber-uns"
-          className="flex flex-col items-center gap-1 rounded-full bg-white px-6 py-3 shadow-lg animate-fade-in-up animate-bounce-gentle"
+          className="flex flex-col items-center gap-1 rounded-full bg-white px-6 py-3 shadow-lg animate-fade-in-up"
           style={{ animationDelay: "1.5s" }}
         >
           <span className="font-serif text-sm font-semibold tracking-wider text-forest-700">
             Mehr entdecken
           </span>
-          <ChevronDown className="h-5 w-5 text-forest-700" />
+          <ChevronDown className="h-5 w-5 text-forest-700 animate-pulse-arrow" />
         </a>
       </div>
 
@@ -213,7 +227,7 @@ export default function HomePage() {
                   width={600}
                   height={450}
                   className="h-auto w-full object-cover"
-                  unoptimized
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </div>
             </FadeInSection>
@@ -305,7 +319,7 @@ export default function HomePage() {
                       alt={apt.alt}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      unoptimized
+                      sizes="(max-width: 640px) 100vw, 50vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   </div>

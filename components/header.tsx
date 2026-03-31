@@ -4,7 +4,6 @@ import { useState, useEffect, useRef, useCallback } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Menu, X, Phone, ChevronDown } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
 
 interface NavItem {
   label: string
@@ -174,47 +173,41 @@ export function Header() {
                       />
                     </button>
 
-                    <AnimatePresence>
-                      {isOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -8, scale: 0.98 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: -8, scale: 0.98 }}
-                          transition={{ duration: 0.15 }}
-                          onMouseEnter={handleDropdownEnter}
-                          onMouseLeave={handleCloseDropdown}
-                          className="absolute top-full left-0 z-50 mt-1 min-w-[280px] overflow-hidden rounded-xl border border-warm-200 bg-white py-2 shadow-xl"
+                    {/* Unsichtbare Brücke zwischen Button und Dropdown */}
+                    <div className="absolute top-full left-0 h-2 w-full" />
+
+                    <div
+                      className={`absolute top-full left-0 z-50 mt-2 min-w-[280px] overflow-hidden rounded-xl border border-warm-200 bg-white py-2 shadow-xl transition-all duration-150 origin-top ${
+                        isOpen ? "scale-100 opacity-100 pointer-events-auto" : "scale-[0.98] opacity-0 pointer-events-none"
+                      }`}
+                    >
+                      <Link
+                        href={item.href}
+                        onClick={() => setOpenDropdown(null)}
+                        className={`block px-5 py-3 font-serif text-[17px] font-bold transition-colors ${
+                          pathname === item.href
+                            ? "bg-forest-50 text-forest-700"
+                            : "text-warm-900 hover:bg-warm-50"
+                        }`}
+                      >
+                        Alle {item.label}
+                      </Link>
+                      <div className="mx-4 my-1.5 border-t border-warm-100" />
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          onClick={() => setOpenDropdown(null)}
+                          className={`block px-5 py-3 font-serif text-[17px] font-medium transition-colors ${
+                            pathname === child.href
+                              ? "bg-forest-50 text-forest-700"
+                              : "text-warm-800 hover:bg-warm-50 hover:text-forest-700"
+                          }`}
                         >
-                          {/* Übersichtsseite */}
-                          <Link
-                            href={item.href}
-                            onClick={() => setOpenDropdown(null)}
-                            className={`block px-5 py-3 font-serif text-[17px] font-bold transition-colors ${
-                              pathname === item.href
-                                ? "bg-forest-50 text-forest-700"
-                                : "text-warm-900 hover:bg-warm-50"
-                            }`}
-                          >
-                            Alle {item.label}
-                          </Link>
-                          <div className="mx-4 my-1.5 border-t border-warm-100" />
-                          {item.children.map((child) => (
-                            <Link
-                              key={child.href}
-                              href={child.href}
-                              onClick={() => setOpenDropdown(null)}
-                              className={`block px-5 py-3 font-serif text-[17px] font-medium transition-colors ${
-                                pathname === child.href
-                                  ? "bg-forest-50 text-forest-700"
-                                  : "text-warm-800 hover:bg-warm-50 hover:text-forest-700"
-                              }`}
-                            >
-                              {child.label}
-                            </Link>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 )
               })}
@@ -257,113 +250,100 @@ export function Header() {
       </header>
 
       {/* Mobile Menu - Fullscreen */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed inset-0 z-40 overflow-y-auto bg-white lg:hidden"
-          >
-            <div className="flex min-h-full flex-col pt-24 pb-8">
-              <nav className="flex flex-1 flex-col px-6">
-                {NAV_ITEMS.map((item, i) => (
-                  <motion.div
-                    key={item.href}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                    className="border-b border-warm-100"
-                  >
-                    {item.children ? (
-                      <>
-                        <button
-                          onClick={() =>
-                            setMobileExpanded(
-                              mobileExpanded === item.label
-                                ? null
-                                : item.label
-                            )
-                          }
-                          className="flex w-full items-center justify-between py-5 font-serif text-[22px] font-semibold text-warm-900"
-                        >
-                          {item.label}
-                          <ChevronDown
-                            className={`h-5 w-5 text-warm-800/50 transition-transform duration-200 ${
-                              mobileExpanded === item.label
-                                ? "rotate-180"
-                                : ""
-                            }`}
-                          />
-                        </button>
-                        <AnimatePresence>
-                          {mobileExpanded === item.label && (
-                            <motion.div
-                              initial={{ height: 0, opacity: 0 }}
-                              animate={{ height: "auto", opacity: 1 }}
-                              exit={{ height: 0, opacity: 0 }}
-                              transition={{ duration: 0.25 }}
-                              className="overflow-hidden"
-                            >
-                              <Link
-                                href={item.href}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="block py-3 pl-5 font-serif text-[17px] font-bold text-forest-700"
-                              >
-                                Übersicht
-                              </Link>
-                              {item.children.map((child) => (
-                                <Link
-                                  key={child.href}
-                                  href={child.href}
-                                  onClick={() => setIsMobileMenuOpen(false)}
-                                  className={`block py-3 pl-5 font-serif text-[17px] ${
-                                    pathname === child.href
-                                      ? "font-semibold text-forest-700"
-                                      : "text-warm-800/80"
-                                  }`}
-                                >
-                                  {child.label}
-                                </Link>
-                              ))}
-                              <div className="h-3" />
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </>
-                    ) : (
+      <div
+        className={`fixed inset-0 z-40 overflow-y-auto bg-white lg:hidden transition-transform duration-300 ease-in-out ${
+          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="flex min-h-full flex-col pt-24 pb-8">
+          <nav className="flex flex-1 flex-col px-6">
+            {NAV_ITEMS.map((item) => (
+              <div
+                key={item.href}
+                className="border-b border-warm-100"
+              >
+                {item.children ? (
+                  <>
+                    <button
+                      onClick={() =>
+                        setMobileExpanded(
+                          mobileExpanded === item.label
+                            ? null
+                            : item.label
+                        )
+                      }
+                      className="flex w-full items-center justify-between py-5 font-serif text-[22px] font-semibold text-warm-900"
+                    >
+                      {item.label}
+                      <ChevronDown
+                        className={`h-5 w-5 text-warm-800/50 transition-transform duration-200 ${
+                          mobileExpanded === item.label
+                            ? "rotate-180"
+                            : ""
+                        }`}
+                      />
+                    </button>
+                    <div
+                      className="overflow-hidden transition-all duration-250 ease-in-out"
+                      style={{
+                        maxHeight: mobileExpanded === item.label ? "500px" : "0",
+                        opacity: mobileExpanded === item.label ? 1 : 0,
+                      }}
+                    >
                       <Link
                         href={item.href}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className={`block py-5 font-serif text-[22px] font-semibold ${
-                          pathname === item.href
-                            ? "text-forest-700"
-                            : "text-warm-900"
-                        }`}
+                        className="block py-3 pl-5 font-serif text-[17px] font-bold text-forest-700"
                       >
-                        {item.label}
+                        Übersicht
                       </Link>
-                    )}
-                  </motion.div>
-                ))}
-              </nav>
-
-              {/* Telefon CTA */}
-              <div className="px-6 pt-6">
-                <a
-                  href="tel:+4983267711"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-center gap-3 rounded-xl bg-forest-700 py-4 font-serif text-[22px] font-bold text-white shadow-sm"
-                >
-                  <Phone className="h-6 w-6" />
-                  08326 / 7711
-                </a>
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className={`block py-3 pl-5 font-serif text-[17px] ${
+                            pathname === child.href
+                              ? "font-semibold text-forest-700"
+                              : "text-warm-800/80"
+                          }`}
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                      <div className="h-3" />
+                    </div>
+                  </>
+                ) : (
+                  <Link
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`block py-5 font-serif text-[22px] font-semibold ${
+                      pathname === item.href
+                        ? "text-forest-700"
+                        : "text-warm-900"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                )}
               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            ))}
+          </nav>
+
+          {/* Telefon CTA */}
+          <div className="px-6 pt-6">
+            <a
+              href="tel:+4983267711"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center justify-center gap-3 rounded-xl bg-forest-700 py-4 font-serif text-[22px] font-bold text-white shadow-sm"
+            >
+              <Phone className="h-6 w-6" />
+              08326 / 7711
+            </a>
+          </div>
+        </div>
+      </div>
     </>
   )
 }

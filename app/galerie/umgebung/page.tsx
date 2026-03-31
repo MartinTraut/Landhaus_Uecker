@@ -2,7 +2,6 @@
 
 import { useRef, useState, useCallback, useEffect } from "react"
 import Link from "next/link"
-import { motion, useInView, AnimatePresence } from "framer-motion"
 import { GALLERY_IMAGES } from "@/lib/data"
 import { CardStack, type CardStackItem } from "@/components/ui/card-stack"
 import { ArrowLeft, X, ChevronLeft, ChevronRight } from "lucide-react"
@@ -26,33 +25,63 @@ function GalleryImage({
   onClick: () => void
 }) {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: "-40px" })
+  const [isInView, setIsInView] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true)
+          observer.unobserve(el)
+        }
+      },
+      { rootMargin: "-40px" }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <div
       ref={ref}
-      className={`cursor-pointer overflow-hidden rounded-2xl bg-warm-900 shadow-md transition-all duration-500 ease-out ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+      className={`cursor-pointer overflow-hidden rounded-2xl shadow-md transition-all duration-500 ease-out ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
       style={{ transitionDelay: `${(index % 6) * 60}ms` }}
       onClick={onClick}
     >
-      <div className="relative aspect-[4/3]">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={image.src}
-          alt={image.alt}
-          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-          loading="lazy"
-        />
-      </div>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={image.src}
+        alt={image.alt}
+        className="w-full rounded-2xl object-cover transition-transform duration-500 hover:scale-105"
+        loading="lazy"
+      />
     </div>
   )
 }
 
 export default function UmgebungGaleriePage() {
   const headerRef = useRef<HTMLDivElement>(null)
-  const headerInView = useInView(headerRef, { once: true })
+  const [headerInView, setHeaderInView] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
-  const { cardWidth, cardHeight } = useResponsiveCardSize()
+  const { cardWidth, cardHeight, maxVisible } = useResponsiveCardSize()
+
+  useEffect(() => {
+    const el = headerRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHeaderInView(true)
+          observer.unobserve(el)
+        }
+      },
+      { rootMargin: "0px" }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   const closeLightbox = () => setLightboxIndex(null)
   const goNext = useCallback(() => {
@@ -116,70 +145,66 @@ export default function UmgebungGaleriePage() {
           showDots={false}
           cardWidth={cardWidth}
           cardHeight={cardHeight}
-          maxVisible={5}
+          maxVisible={maxVisible}
           overlap={0.5}
           spreadDeg={42}
         />
       </div>
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="grid grid-cols-1 gap-3 min-[400px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="columns-2 gap-3 sm:columns-3 lg:columns-4">
           {images.map((image, index) => (
-            <GalleryImage
-              key={image.src}
-              image={image}
-              index={index}
-              onClick={() => setLightboxIndex(index)}
-            />
+            <div key={image.src} className="mb-3 break-inside-avoid">
+              <GalleryImage
+                image={image}
+                index={index}
+                onClick={() => setLightboxIndex(index)}
+              />
+            </div>
           ))}
         </div>
       </div>
 
       {/* Lightbox */}
-      <AnimatePresence>
-        {lightboxIndex !== null && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4"
+      {lightboxIndex !== null && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 animate-fade-in"
+          onClick={closeLightbox}
+        >
+          <button
             onClick={closeLightbox}
+            className="absolute top-4 right-4 z-10 rounded-full bg-white/15 p-2.5 text-white hover:bg-white/25"
           >
-            <button
-              onClick={closeLightbox}
-              className="absolute top-4 right-4 z-10 rounded-full bg-white/15 p-2.5 text-white hover:bg-white/25"
-            >
-              <X className="h-6 w-6" />
-            </button>
-            <button
-              onClick={(e) => { e.stopPropagation(); goPrev() }}
-              className="absolute left-4 z-10 rounded-full bg-white/15 p-2.5 text-white hover:bg-white/25"
-            >
-              <ChevronLeft className="h-7 w-7" />
-            </button>
-            <button
-              onClick={(e) => { e.stopPropagation(); goNext() }}
-              className="absolute right-4 z-10 rounded-full bg-white/15 p-2.5 text-white hover:bg-white/25"
-            >
-              <ChevronRight className="h-7 w-7" />
-            </button>
-            <div
-              className="flex max-h-[85vh] max-w-5xl items-center justify-center"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={images[lightboxIndex].src}
-                alt={images[lightboxIndex].alt}
-                className="max-h-[85vh] max-w-full rounded-lg object-contain"
-              />
-            </div>
-            <p className="absolute bottom-6 left-1/2 -translate-x-1/2 font-serif text-base text-white/60">
-              {lightboxIndex + 1} / {images.length}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <X className="h-6 w-6" />
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); goPrev() }}
+            className="absolute left-4 z-10 rounded-full bg-white/15 p-2.5 text-white hover:bg-white/25"
+          >
+            <ChevronLeft className="h-7 w-7" />
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); goNext() }}
+            className="absolute right-4 z-10 rounded-full bg-white/15 p-2.5 text-white hover:bg-white/25"
+          >
+            <ChevronRight className="h-7 w-7" />
+          </button>
+          <div
+            className="flex max-h-[85vh] max-w-5xl items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={images[lightboxIndex].src}
+              alt={images[lightboxIndex].alt}
+              className="max-h-[85vh] max-w-full rounded-lg object-contain"
+            />
+          </div>
+          <p className="absolute bottom-6 left-1/2 -translate-x-1/2 font-serif text-base text-white/60">
+            {lightboxIndex + 1} / {images.length}
+          </p>
+        </div>
+      )}
     </div>
   )
 }
