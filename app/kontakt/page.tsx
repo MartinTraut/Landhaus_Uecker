@@ -77,7 +77,7 @@ export default function KontaktPage() {
   }
 
   const inputClasses =
-    "w-full rounded-xl border border-warm-200 bg-white px-3 py-2.5 font-serif text-base text-warm-900 placeholder:text-warm-800/40 focus:border-forest-600 focus:outline-none focus:ring-2 focus:ring-forest-600/20 transition-colors sm:px-4 sm:py-3 sm:text-lg"
+    "w-full rounded-lg border border-warm-200 bg-white px-3 py-2 font-serif text-[15px] text-warm-900 placeholder:text-warm-800/40 focus:border-forest-600 focus:outline-none focus:ring-2 focus:ring-forest-600/20 transition-colors sm:rounded-xl sm:px-4 sm:py-3 sm:text-base md:text-lg"
 
   return (
     <div className="min-h-screen bg-warm-50 pt-28 pb-20">
@@ -206,7 +206,7 @@ export default function KontaktPage() {
                   <div>
                     <label
                       htmlFor="name"
-                      className="mb-2 block font-serif text-base font-semibold text-warm-900"
+                      className="mb-1 block font-serif text-sm font-semibold text-warm-900 sm:mb-1.5 sm:text-base"
                     >
                       Name <span className="text-red-600">*</span>
                     </label>
@@ -224,7 +224,7 @@ export default function KontaktPage() {
                   <div>
                     <label
                       htmlFor="email"
-                      className="mb-2 block font-serif text-base font-semibold text-warm-900"
+                      className="mb-1 block font-serif text-sm font-semibold text-warm-900 sm:mb-1.5 sm:text-base"
                     >
                       E-Mail <span className="text-red-600">*</span>
                     </label>
@@ -246,7 +246,7 @@ export default function KontaktPage() {
                   <div>
                     <label
                       htmlFor="telefon"
-                      className="mb-2 block font-serif text-base font-semibold text-warm-900"
+                      className="mb-1 block font-serif text-sm font-semibold text-warm-900 sm:mb-1.5 sm:text-base"
                     >
                       Telefon
                     </label>
@@ -263,7 +263,7 @@ export default function KontaktPage() {
                   <div>
                     <label
                       htmlFor="wohnung"
-                      className="mb-2 block font-serif text-base font-semibold text-warm-900"
+                      className="mb-1 block font-serif text-sm font-semibold text-warm-900 sm:mb-1.5 sm:text-base"
                     >
                       Gewünschte Wohnung
                     </label>
@@ -289,7 +289,7 @@ export default function KontaktPage() {
                   <div>
                     <label
                       htmlFor="anreise"
-                      className="mb-2 block font-serif text-base font-semibold text-warm-900"
+                      className="mb-1 block font-serif text-sm font-semibold text-warm-900 sm:mb-1.5 sm:text-base"
                     >
                       Anreise
                     </label>
@@ -305,7 +305,7 @@ export default function KontaktPage() {
                   <div>
                     <label
                       htmlFor="abreise"
-                      className="mb-2 block font-serif text-base font-semibold text-warm-900"
+                      className="mb-1 block font-serif text-sm font-semibold text-warm-900 sm:mb-1.5 sm:text-base"
                     >
                       Abreise
                     </label>
@@ -321,7 +321,7 @@ export default function KontaktPage() {
                   <div className="sm:col-span-2 lg:col-span-1">
                     <label
                       htmlFor="personen"
-                      className="mb-2 block font-serif text-base font-semibold text-warm-900"
+                      className="mb-1 block font-serif text-sm font-semibold text-warm-900 sm:mb-1.5 sm:text-base"
                     >
                       Personen
                     </label>
