@@ -104,6 +104,20 @@
   }
   html {
     @apply scroll-smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Verhindere iOS-Zoom bei Input-Focus */
+  input[type="date"],
+  input[type="number"],
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  select,
+  textarea {
+    font-size: 16px;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   /* Überschriften: Cormorant Garamond – elegant, warm, gut lesbar */

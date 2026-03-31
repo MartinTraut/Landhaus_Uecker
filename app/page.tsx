@@ -125,13 +125,17 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero Section ── */}
-      <section className="relative h-[100svh] min-h-[500px] w-full overflow-hidden sm:h-[90vh] sm:min-h-[600px]">
+      <section className="relative h-[100svh] min-h-[500px] w-full overflow-hidden sm:h-[90vh] sm:min-h-[600px]" style={{ transform: "translate3d(0,0,0)" }}>
         {/* Background images with opacity transition */}
         {heroImages.map((img, index) => (
           <div
             key={img.src}
-            className="absolute inset-0 transition-opacity duration-[2500ms] ease-in-out"
-            style={{ opacity: index === currentImage ? 1 : 0 }}
+            className="absolute inset-0"
+            style={{
+              opacity: index === currentImage ? 1 : 0,
+              transition: "opacity 2500ms ease-in-out",
+              willChange: index === currentImage ? "opacity" : "auto",
+            }}
           >
             <Image
               src={img.src}

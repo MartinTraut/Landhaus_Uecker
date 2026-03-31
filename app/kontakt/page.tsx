@@ -1,7 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
-import { motion, useInView } from "framer-motion"
+import { useRef, useState, useEffect } from "react"
 import { APARTMENTS } from "@/lib/data"
 import { Phone, Mail, MapPin, Users, Send } from "lucide-react"
 
@@ -15,18 +14,36 @@ function FadeIn({
   className?: string
 }) {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: "-60px" })
+  const [isInView, setIsInView] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true)
+          observer.unobserve(el)
+        }
+      },
+      { rootMargin: "-60px" }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay }}
-      className={className}
+      className={`transition-all duration-600 ease-out ${className}`}
+      style={{
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "translateY(0)" : "translateY(30px)",
+        transitionDelay: `${delay * 1000}ms`,
+      }}
     >
       {children}
-    </motion.div>
+    </div>
   )
 }
 
@@ -60,7 +77,7 @@ export default function KontaktPage() {
   }
 
   const inputClasses =
-    "w-full rounded-xl border border-warm-200 bg-white px-4 py-3 font-serif text-lg text-warm-900 placeholder:text-warm-800/40 focus:border-forest-600 focus:outline-none focus:ring-2 focus:ring-forest-600/20 transition-colors"
+    "w-full rounded-xl border border-warm-200 bg-white px-3 py-2.5 font-serif text-base text-warm-900 placeholder:text-warm-800/40 focus:border-forest-600 focus:outline-none focus:ring-2 focus:ring-forest-600/20 transition-colors sm:px-4 sm:py-3 sm:text-lg"
 
   return (
     <div className="min-h-screen bg-warm-50 pt-28 pb-20">
@@ -178,12 +195,12 @@ export default function KontaktPage() {
 
           {/* Rechte Spalte: Formular */}
           <FadeIn delay={0.15} className="lg:col-span-3">
-            <div className="rounded-2xl border border-warm-100 bg-white p-6 shadow-md md:p-8">
-              <h2 className="mb-6 font-serif text-2xl font-bold text-warm-900 md:text-3xl">
+            <div className="rounded-2xl border border-warm-100 bg-white p-4 shadow-md sm:p-6 md:p-8">
+              <h2 className="mb-5 font-serif text-xl font-bold text-warm-900 sm:mb-6 sm:text-2xl md:text-3xl">
                 Anfrage senden
               </h2>
 
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
                     <label
@@ -265,11 +282,11 @@ export default function KontaktPage() {
                   </div>
                 </div>
 
-                <div className="grid gap-5 grid-cols-1 min-[400px]:grid-cols-2 sm:grid-cols-3">
+                <div className="grid gap-5 grid-cols-2 sm:grid-cols-3">
                   <div>
                     <label
                       htmlFor="anreise"
-                      className="mb-1.5 block font-serif text-base font-semibold text-warm-900"
+                      className="mb-1.5 block font-serif text-sm font-semibold text-warm-900 sm:text-base"
                     >
                       Anreise
                     </label>
@@ -285,7 +302,7 @@ export default function KontaktPage() {
                   <div>
                     <label
                       htmlFor="abreise"
-                      className="mb-1.5 block font-serif text-base font-semibold text-warm-900"
+                      className="mb-1.5 block font-serif text-sm font-semibold text-warm-900 sm:text-base"
                     >
                       Abreise
                     </label>
@@ -298,10 +315,10 @@ export default function KontaktPage() {
                       className={inputClasses}
                     />
                   </div>
-                  <div>
+                  <div className="col-span-2 sm:col-span-1">
                     <label
                       htmlFor="personen"
-                      className="mb-1.5 block font-serif text-base font-semibold text-warm-900"
+                      className="mb-1.5 block font-serif text-sm font-semibold text-warm-900 sm:text-base"
                     >
                       Personen
                     </label>
